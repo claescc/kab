@@ -1,0 +1,100 @@
+<!--      START SCREEN TASKS      -->
+<h3>Welcome to your task organiser!</h3>
+<h4>Name: {{currentUser.firstName}} id: {{currentUser.id}}</h4>
+
+
+<!--     CREATE & EDIT CATEGORY    -->
+<div id="create-edit">
+  <form>
+    <label for="cat">Category: </label>
+    <input type="text" id="category" [(ngModel)]="cat" name="cat">
+    <button class="createbtn" (click)="createCategoryInDatabank()"> + </button>
+  </form>
+</div>
+
+
+
+<!--     CATEGORY ASSEMBLY      -->
+<div id="categorylist">
+  <!-- <div *ngFor="let c of categories" class="cattab"> -->
+  <div *ngFor="let c of headCategories" class="cattab">
+
+    <!-- VISIBLE WHEN CREATED -->
+    <span class="cat_title">{{c.cat_description}}</span>
+    <div class="btnExtra" id="btnExtra">
+      <button class="deletebtn" (click)="deletebtn(c)"> x </button>
+      <button class="editbtn" (click)="show = !show">edit </button>
+
+      <!-- ADD SUB & TASK -->
+      <button class="btnAddSubCat" (click)="currentSubcat = c; ">Add subcategory </button>
+      <button class="btnAddTask" (click)="currentTask = t; ">Add Task </button>
+
+
+
+    </div>
+
+    <!-- <div *ngIf="showSub"> -->
+    <div *ngIf="c == currentSubcat">
+      <input type="text" id="subCategory" [(ngModel)]="subCat" name="subCat">
+      <button class="btnCreate" (click)=" createSubCat(c);"> save SubCat </button>
+      <!-- <button class="cancelbtn" (click)="show = !show"> cancel </button> -->
+    </div>
+
+    <!-- <div *ngIf="showTaak"> -->
+    <div *ngIf="t == currentTask">
+      <input type="text" id="task" [(ngModel)]="task" name="task">
+      <textarea [(ngModel)]="taskText">{{taskText}}</textarea>
+      <input type="date" id="dates" [(ngModel)]="dateStart" name="dateStart">
+      <input type="date" id="dates" [(ngModel)]="dateEnd" name="dateEnd">
+      <button class="btnCreate" (click)="createTask(c);"> save Task </button>
+     <!-- <button class="cancelbtn" (click)="show = !show"> cancel </button> -->
+    </div>
+
+    <!-- VISIBLE WHEN IN EDIT MODUS -->
+    <div *ngIf="show">
+      <input type="text" class="cat_title" [(ngModel)]="c.cat_description" name="c.cat_description">
+      <button class="savebtn" (click)="show = !show; editTitle(c);"> save Cat </button>
+      <button class="cancelbtn" (click)="show = !show"> cancel </button>
+    </div>
+
+  </div>
+
+  <span *ngIf="categories.length === 0" id="span">You have no categories to organise...</span>
+</div>
+
+
+
+<div id="subCategorylist">
+
+  <div *ngFor="let sc of subCategories" class="subCattab">
+
+    <!-- voor sub-cat te creeren -->
+    <!-- <div *ngIf="showSub">
+        <input type="text" id="subCategory" [(ngModel)]="subCat" name="subCat">
+      <input type="text" class="subcat_title" [(ngModel)]="sc.subCat_description" name="sc.subCat_description">
+      <button class="btnSave" (click)="showSub = !showSub; createSubCat();"> save </button>
+      <button class="btnCancel" (click)="showSub = !showSub"> cancel </button>
+    </div> -->
+
+
+  </div>
+
+</div>
+
+<!-- DIT KLOPT NIET: maar heb de functies en btns nodig om op te werken --> 
+<div id="Alltasks">
+
+  <div *ngFor="let taak of allTasks" class="tasks">
+    <button class="deleteTaak" (click)="deleteTaak(taak)"> x </button>
+    <input type="text" id="task" [(ngModel)]="task" name="task">
+      <textarea [(ngModel)]="taskText">{{taak.taskText}}</textarea>
+      <input type="date" id="dates" [(ngModel)]="dateStart" name="dateStart">
+      <input type="date" id="dates" [(ngModel)]="dateEnd" name="dateEnd">
+      <button class="editbtn" (click)="show = !show; editTaak()">edit taak </button>
+  </div>
+
+</div>
+
+<div class="back">
+  <a routerLink="/home" class="btn">back</a>
+</div>
